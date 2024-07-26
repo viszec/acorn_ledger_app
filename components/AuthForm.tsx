@@ -13,6 +13,7 @@ import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -39,8 +40,22 @@ const AuthForm = ({ type }: { type: string }) => {
       //alert(JSON.stringify(values, null, 2));
 
       // Sign up with appwrite & create plaid token
+      
       if (type === "sign-up") {
-        const newUser = await signUp(data);
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password,
+        }
+
+        const newUser = await signUp(userData);
 
         setUser(newUser);
       }
@@ -87,8 +102,10 @@ const AuthForm = ({ type }: { type: string }) => {
           </h1>
         </div>
       </header>
-      {user ? (
-        <div className="flex flex-col gap-4">{/*PlaidLink*/}</div>
+     {user ? (
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary"/>
+        </div>
       ) : (
         <>
           <Form {...form}>
@@ -126,13 +143,13 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="state"
                       label="State"
-                      placeholder="eg: NWS"
+                      placeholder="eg: NY"
                     />
                     <CustomInput
                       control={form.control}
-                      name="postCode"
+                      name="postalCode"
                       label="Post Code"
-                      placeholder="eg: 3000"
+                      placeholder="eg: 00000"
                     />
                   </div>
                   <div className="flex gap-4">

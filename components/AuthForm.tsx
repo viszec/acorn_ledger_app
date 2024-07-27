@@ -40,7 +40,7 @@ const AuthForm = ({ type }: { type: string }) => {
       //alert(JSON.stringify(values, null, 2));
 
       // Sign up with appwrite & create plaid token
-      
+
       if (type === "sign-up") {
         const userData = {
           firstName: data.firstName!,
@@ -53,7 +53,7 @@ const AuthForm = ({ type }: { type: string }) => {
           ssn: data.ssn!,
           email: data.email,
           password: data.password,
-        }
+        };
 
         const newUser = await signUp(userData);
 
@@ -65,7 +65,11 @@ const AuthForm = ({ type }: { type: string }) => {
           email: data.email,
           password: data.password,
         });
-        if (response) router.push("/");
+        if (response) {
+          router.push("/");
+        } else {
+          setError(response.error || "Login failed");
+        }
       }
 
       console.log(data);
@@ -102,9 +106,9 @@ const AuthForm = ({ type }: { type: string }) => {
           </h1>
         </div>
       </header>
-     {user ? (
+      {user ? (
         <div className="flex flex-col gap-4">
-          <PlaidLink user={user} variant="primary"/>
+          <PlaidLink user={user} variant="primary" />
         </div>
       ) : (
         <>
@@ -187,7 +191,11 @@ const AuthForm = ({ type }: { type: string }) => {
                       <Loader2 size={20} className="animate-spin" /> &nbsp;
                       Loading...
                     </>
-                  ) : type === "sign-in" ? "Sign In" : "Sign Up" }
+                  ) : type === "sign-in" ? (
+                    "Sign In"
+                  ) : (
+                    "Sign Up"
+                  )}
                 </Button>
               </div>
             </form>
@@ -213,3 +221,10 @@ const AuthForm = ({ type }: { type: string }) => {
 };
 
 export default AuthForm;
+function setError(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+
+function updateGlobalUserState(user: any) {
+  throw new Error("Function not implemented.");
+}

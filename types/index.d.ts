@@ -50,6 +50,7 @@ declare type NewUserParams = {
 };
 
 declare type Account = {
+  totalCurrentBalance: number;
   id: string;
   availableBalance: number;
   currentBalance: number;

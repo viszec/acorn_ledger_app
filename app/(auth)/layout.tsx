@@ -11,11 +11,11 @@ export default function RootLayout({
       <div className="auth-asset">
         <div>
           <Image
-          src="/icons/auth-image.svg"
+          src="/icons/auth_image.jpg"
           alt="Auth image"
-          width={500}
-          height={500}
-          layout="intrinsic"
+          layout="fill"
+          objectFit='cover'
+          className='w-full h-full'
           />
         </div>
       </div>

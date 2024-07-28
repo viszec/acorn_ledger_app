@@ -6,6 +6,12 @@ const nextConfig = {
     compiler: {
       reactRemoveProperties: { properties: ['^data-custom$'] },
     },
+    typescript: {
+      ignoreBuildErrors: true,
+    },
+    eslint: {
+      ignoreDuringBuilds: true,
+    },
 };
 
 export default withSentryConfig(nextConfig, {

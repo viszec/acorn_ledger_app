@@ -22,7 +22,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             alt="NovaBank logo"
             className="size-[34px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">NovaBank</h1>
+          <h1 className="sidebar-logo">Novabank</h1>
         </Link>
 
         {sidebarLinks.map((item) => {

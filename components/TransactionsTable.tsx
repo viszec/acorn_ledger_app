@@ -58,7 +58,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
           return (
             <TableRow
               key={t.id}
-              className={`${isDebit || amount[0] === "-" ? "bg-[#fffbfa]" : "bg-[#f6fef9]"
+              className={`${isDebit || amount[0] === "-" ? "bg-[#fffbfa]" : "bg-[#fffffffe]"
                 } !over:bg-none !border-b-DEFAULT`}
             >
               <TableCell className="max-w-[250px] pl-2 pr-10">
@@ -71,8 +71,8 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
 
               <TableCell
                 className={`pl-2 pr-10 font-semibold ${isDebit || amount[0] === "-"
-                    ? "text-[#f16055]"
-                    : "text-[#3c8b68]"
+                    ? "text-[#cf544b]"
+                    : "text-[#393f3d]"
                   }`}
               >
                 {isDebit ? `-${amount}` : isCredit ? amount : amount}

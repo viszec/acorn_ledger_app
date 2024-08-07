@@ -44,7 +44,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
               alt="NovaBank logo"
             />
             <h1 className="text-23 font-ibm-plex-serif font-bold text-black-1">
-              NovaBank
+              Novabank
             </h1>
           </Link>
           <div className="mobilenav-sheet">

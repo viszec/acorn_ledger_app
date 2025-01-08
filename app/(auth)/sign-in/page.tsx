@@ -1,6 +1,7 @@
 import AuthForm from '@/components/AuthForm';
 import React from 'react';
 
+export const runtime = 'edge';
 
 const SignIn = () => {
   return (

@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+export const notFoundRuntime = 'edge';
 
 export default function NotFound() {
   return (

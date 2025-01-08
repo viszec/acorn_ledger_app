@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const layoutRuntime = 'edge';
 
 import type { Metadata } from "next";
 import { Inter, Ubuntu } from "next/font/google";

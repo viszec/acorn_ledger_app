@@ -12,8 +12,8 @@ const ubuntu = Ubuntu({
 })
 
 export const metadata: Metadata = {
-  title: "Novabank",
-  description: "Nova is a modern banking platform for everyone.",
+  title: "Acorn Ledger",
+  description: "Acorn Ledger is a modern accounting management platform for everyone.",
   icons: {
     icon:'/icons/logo.svg'
   }

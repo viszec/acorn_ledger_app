@@ -19,10 +19,10 @@ const Sidebar = ({ user }: SiderbarProps) => {
             src="/icons/logo.svg"
             width={34}
             height={34}
-            alt="NovaBank logo"
+            alt="Acorn Ledger logo"
             className="size-[34px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">Novabank</h1>
+          <h1 className="sidebar-logo">Acorn Ledger</h1>
         </Link>
 
         {sidebarLinks.map((item) => {

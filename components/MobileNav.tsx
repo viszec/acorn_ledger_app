@@ -41,10 +41,10 @@ const MobileNav = ({ user }: MobileNavProps) => {
               src="/icons/logo.svg"
               width={34}
               height={34}
-              alt="NovaBank logo"
+              alt="Acorn Ledger logo"
             />
             <h1 className="text-23 font-ibm-plex-serif font-bold text-black-1">
-              Novabank
+              Acorn Ledger
             </h1>
           </Link>
           <div className="mobilenav-sheet">

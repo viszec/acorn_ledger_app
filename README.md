@@ -1,4 +1,4 @@
-# NovaBank
+# Acorn Ledger
 
 A modern banking platform built with Next.js that provides secure financial management capabilities.
 
@@ -49,7 +49,7 @@ Create a `.env` file in the root directory with the following variables:
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Project Structure
-novabank/
+Acorn Ledger APP/
 ├── app/                # Next.js app directory
 │   ├── (root)/         # Root layout and pages
 │   └── globals.css     # Global styles

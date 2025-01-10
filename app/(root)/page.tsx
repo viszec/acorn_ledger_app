@@ -6,6 +6,7 @@ import { getAccount, getAccounts } from '@/lib/actions/bank.actions';
 import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 export const runtime = 'edge';
+export const preferredRegion = 'auto';
 
 const Home = async ({ searchParams }: SearchParamProps) => {
   const params = await searchParams;

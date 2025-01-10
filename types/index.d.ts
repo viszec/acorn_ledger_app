@@ -227,9 +227,9 @@ declare interface SiderbarProps {
 
 declare interface RecentTransactionsProps {
   accounts: Account[];
-  transactions: Transaction[];
-  appwriteItemId: string;
-  page: number;
+  transactions?: Transaction[];
+  appwriteItemId?: string;
+  page?: number;
 }
 
 declare interface TransactionHistoryTableProps {

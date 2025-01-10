@@ -12,7 +12,7 @@ import {
 
 const BankInfo = ({ account, appwriteItemId, type }: BankInfoProps) => {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const searchParams = useSearchParams() || '';
 
     const isActive = appwriteItemId === account?.appwriteItemId;
 

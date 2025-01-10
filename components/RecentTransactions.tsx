@@ -7,7 +7,7 @@ import { Pagination } from './Pagination'
 
 const RecentTransactions = ({
     accounts,
-    transactions = [],
+    transactions = [] as Transaction[],
     appwriteItemId,
     page = 1,
 }: RecentTransactionsProps) => {

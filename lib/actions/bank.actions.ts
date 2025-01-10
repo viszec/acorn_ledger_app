@@ -68,6 +68,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     try {
         // get bank from db
         const bank = await getBank({ documentId: appwriteItemId });
+        if (!bank) return null;
 
         // get account info from plaid
         const accountsResponse = await plaidClient.accountsGet({
@@ -80,7 +81,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
             bankId: bank.$id,
         });
 
-        const transferTransactions = transferTransactionsData.documents.map(
+        const transferTransactions = transferTransactionsData?.documents?.map(
             (transferData: Transaction) => ({
                 id: transferData.$id,
                 name: transferData.name!,
@@ -90,41 +91,25 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
                 category: transferData.category,
                 type: transferData.senderBankId === bank.$id ? "debit" : "credit",
             })
-        );
+        ) || [];
 
-        // get institution info from plaid
-        const institution = await getInstitution({
-            institutionId: accountsResponse.data.item.institution_id!,
-        });
-
+        // get plaid transactions
         const transactions = await getTransactions({
             accessToken: bank?.accessToken,
-        });
+        }) || [];
 
-        const account = {
-            id: accountData.account_id,
-            availableBalance: accountData.balances.available!,
-            currentBalance: accountData.balances.current!,
-            institutionId: institution.institution_id,
-            name: accountData.name,
-            officialName: accountData.official_name,
-            mask: accountData.mask!,
-            type: accountData.type as string,
-            subtype: accountData.subtype! as string,
-            appwriteItemId: bank.$id,
-        };
-
-        // sort transactions by date such that the most recent transaction is first
+        // sort transactions by date
         const allTransactions = [...transactions, ...transferTransactions].sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
 
-        return parseStringify({
-            data: account,
+        return {
+            data: accountData,
             transactions: allTransactions,
-        });
+        };
     } catch (error) {
-        console.error("An error occurred while getting the account:", error);
+        console.error("Error getting account:", error);
+        return null;
     }
 };
 
@@ -147,39 +132,15 @@ export const getInstitution = async ({
 };
 
 // Get transactions
-export const getTransactions = async ({
-    accessToken,
-}: getTransactionsProps) => {
-    let hasMore = true;
-    let transactions: any = [];
-
+export const getTransactions = async ({ accessToken }: getTransactionsProps) => {
     try {
-        // Iterate through each page of new transaction updates for item
-        while (hasMore) {
-            const response = await plaidClient.transactionsSync({
-                access_token: accessToken,
-            });
-
-            const data = response.data;
-
-            transactions = response.data.added.map((transaction) => ({
-                id: transaction.transaction_id,
-                name: transaction.name,
-                paymentChannel: transaction.payment_channel,
-                type: transaction.payment_channel,
-                accountId: transaction.account_id,
-                amount: transaction.amount,
-                pending: transaction.pending,
-                category: transaction.category ? transaction.category[0] : "",
-                date: transaction.date,
-                image: transaction.logo_url,
-            }));
-
-            hasMore = data.has_more;
-        }
-
-        return parseStringify(transactions);
+        const response = await plaidClient.transactionsSync({
+            access_token: accessToken,
+            cursor: ''
+        });
+        return response.data.added || [];
     } catch (error) {
-        console.error("An error occurred while getting the accounts:", error);
+        console.error('Plaid API error:', error);
+        return [];
     }
 };

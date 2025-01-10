@@ -8,6 +8,7 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { plaidClient } from "@/lib/plaid";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
+import { redirect } from "next/navigation";
 
 const {
     APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -36,7 +37,8 @@ export const signIn = async ({ email, password }: signInProps) => {
         const { account } = await createAdminClient();
         const session = await account.createEmailPasswordSession(email, password);
 
-        cookies().set("appwrite-session", session.secret, {
+        const cookieStore = await cookies();
+        cookieStore.set("appwrite-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -91,7 +93,8 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
         const session = await account.createEmailPasswordSession(email, password);
 
-        cookies().set("appwrite-session", session.secret, {
+        const cookieStore = await cookies();
+        cookieStore.set("appwrite-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -105,6 +108,12 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
 export async function getLoggedInUser() {
     try {
+        const cookieStore = await cookies();
+        const session = cookieStore.get("appwrite-session");
+        
+        if (!session?.value) {
+            redirect('/sign-in');
+        }
         const { account } = await createSessionClient();
         const result = await account.get();
 
@@ -112,7 +121,7 @@ export async function getLoggedInUser() {
 
         return parseStringify(user);
     } catch (error) {
-        return null;
+        redirect('/sign-in');
     }
 }
 
@@ -120,7 +129,8 @@ export const logoutAccount = async () => {
     try {
         const { account } = await createSessionClient();
 
-        cookies().delete('appwrite-session');
+        const cookieStore = await cookies();
+        cookieStore.delete('appwrite-session');
 
         await account.deleteSession('current');
         return true; // Return true if the user is successfully logged out

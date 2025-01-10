@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "20.18.0"
+    "node": "20.18.0",
+    "npm": "10.2.3"
   },
+  "engineStrict": true,
   "scripts": {
+    "preinstall": "node ./scripts/check-node-version.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

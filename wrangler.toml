@@ -1,0 +1,20 @@
+name = "acorn-ledger-app"
+compatibility_date = "2024-01-10"
+
+[build]
+command = "npm run build"
+output_dir = ".next"
+
+[build.upload]
+format = "service-worker"
+
+[site]
+bucket = ".next"
+entry-point = "."
+
+[[build.environment]]
+name = "NODE_VERSION"
+value = "20.18.0"
+
+[env.production]
+workers_dev = true 

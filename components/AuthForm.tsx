@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,9 +11,9 @@ import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import PlaidLink from "./PlaidLink";
-
+import Logo from "./common/Logo";
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -84,21 +83,13 @@ const AuthForm = ({ type }: { type: string }) => {
     <section className="auth-form">
       <header className="flex flex-col gap-5 md:gap-8">
         <Link href="/" className="cursor-pointer flex items-center gap-1">
-          <Image
-            src="/icons/logo.svg"
-            width={34}
-            height={34}
-            alt="Acorn Ledger logo"
-          />
-          <h1 className="text-23 font-ibm-plex-serif font-bold text-black-1">
-            Acorn Ledger
-          </h1>
+          <Logo />
         </Link>
 
         <div className="flex flex-col gap-1 md:gap-3">
-          <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
+          <h1 className="text-xl lg:text-3xl font-semibold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
-            <p className="text-16 font-normal text-gray-600">
+            <p className="text-base font-normal text-gray-600 pt-3">
               {user
                 ? "Link your bank account to get started"
                 : "Please enter your details"}
@@ -113,21 +104,21 @@ const AuthForm = ({ type }: { type: string }) => {
       ) : (
         <>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 text-sm">
               {type === "sign-up" && (
                 <>
                   <div className="flex gap-4">
                     <CustomInput
                       control={form.control}
                       name="firstName"
-                      label="First Name"
-                      placeholder="Enter your first name"
+                      label="First Name *"
+                      placeholder="First name"
                     />
                     <CustomInput
                       control={form.control}
                       name="lastName"
-                      label="Last Name"
-                      placeholder="Enter your last name"
+                      label="Last Name *"
+                      placeholder="Last name"
                     />
                   </div>
                   <CustomInput
@@ -161,7 +152,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="dateOfBirth"
                       label="Date of Birth"
-                      placeholder="YYYY-MM-DD"
+                      placeholder="1900-01-01"
                     />
                     <CustomInput
                       control={form.control}
@@ -175,13 +166,13 @@ const AuthForm = ({ type }: { type: string }) => {
               <CustomInput
                 control={form.control}
                 name="email"
-                label="Email"
-                placeholder="Enter your email"
+                label="Email *"
+                placeholder="your@email.com"
               />
               <CustomInput
                 control={form.control}
                 name="password"
-                label="Password"
+                label="Password *"
                 placeholder="Enter your password"
               />
               <div className="flex flex-col gap-4">
@@ -202,7 +193,7 @@ const AuthForm = ({ type }: { type: string }) => {
           </Form>
 
           <footer className="flex justify-center gap-1">
-            <p className="text-14 font-normal text-gray-600">
+            <p className="text-sm text-gray-500">
               {type === "sign-in"
                 ? "Don't have an account?"
                 : "Already have an account?"}
@@ -211,7 +202,7 @@ const AuthForm = ({ type }: { type: string }) => {
               href={type === "sign-in" ? "/sign-up" : "/sign-in"}
               className="form-link"
             >
-              {type === "sign-in" ? "Sign Up" : "Sign In"}
+              {type === "sign-in" ? "Sign Up for free" : "Sign In"}
             </Link>
           </footer>
         </>

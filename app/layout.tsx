@@ -13,7 +13,7 @@ const ubuntu = Ubuntu({
 })
 
 export const metadata: Metadata = {
-  title: "Acorn Ledger",
+  title: "Acorn Ledger | Accounting Management Platform",
   description: "Acorn Ledger is a modern accounting management platform for everyone.",
   icons: {
     icon:'/icons/logo.svg'

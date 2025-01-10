@@ -18,7 +18,7 @@ import Footer from "./Footer";
 import { sidebarLinks } from "@/constants";
 
 const MobileNav = ({ user }: MobileNavProps) => {
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
 
   return (
     <section className="w-full max-w-[264px]">

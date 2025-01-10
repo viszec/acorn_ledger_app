@@ -7,19 +7,22 @@ import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 export const pageRuntime = 'edge';
 
-const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
-  const currentPage = Number(page as string) || 1;
+const Home = async ({ searchParams }: SearchParamProps) => {
+  const params = await searchParams;
+  const currentPage = Number(params?.page as string) || 1;
+  const appwriteItemId = (params?.id as string);
+
   const loggedIn = await getLoggedInUser();
   const accounts = await getAccounts({
     userId: loggedIn.$id
-  })
+  });
 
-  if (!accounts) return;
+  if (!accounts?.data?.length) return null;
 
-  const accountsData = accounts?.data;
-  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
+  const accountsData = accounts.data;
+  const selectedId = appwriteItemId || accountsData[0]?.appwriteItemId;
 
-  const account = await getAccount({ appwriteItemId })
+  const account = await getAccount({ appwriteItemId: selectedId });
 
   return (
     <section className="home">
@@ -41,15 +44,15 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
 
         <RecentTransactions
           accounts={accountsData}
-          transactions={account?.transactions}
-          appwriteItemId={appwriteItemId}
+          transactions={account?.transactions as Transaction[]}
+          appwriteItemId={selectedId}
           page={currentPage}
         />
       </div>
 
       <RightSidebar
         user={loggedIn}
-        transactions={account?.transactions}
+        transactions={account?.transactions as Transaction[]}
         banks={accountsData?.slice(0, 2)}
       />
     </section>

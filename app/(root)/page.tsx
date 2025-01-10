@@ -5,7 +5,7 @@ import TotalBalanceBox from '@/components/TotalBalanceBox';
 import { getAccount, getAccounts } from '@/lib/actions/bank.actions';
 import { getLoggedInUser } from '@/lib/actions/user.actions';
 
-export const pageRuntime = 'edge';
+export const runtime = 'edge';
 
 const Home = async ({ searchParams }: SearchParamProps) => {
   const params = await searchParams;
